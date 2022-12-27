@@ -1,0 +1,58 @@
+---
+version: "2.1"
+
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${uid}
+      - PGID=${gid}
+      - TZ=${timezone}
+    volumes:
+      - ./config/wireguard:/config
+    ports:
+      - ${wireguard_ext_port}:51820/udp
+      - ${transmission_ui_port}:${transmission_ui_port} 
+      - ${transmission_peerport}:${transmission_peerport}
+      - ${transmission_peerport}:${transmission_peerport}/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=0
+    restart: unless-stopped
+  nextcloud:
+    build: ./nextcloud
+    container_name: nextcloud
+    environment:
+      - PUID=${uid}
+      - PGID=${gid}
+      - TZ=${timezone}
+    volumes:
+      - ./config/nextcloud:/config
+      - ${data_path}/shared:/data
+    ports:
+      - ${nextcloud_port}:443
+    restart: unless-stopped
+  transmission:
+    build: ./transmission
+    container_name: transmission
+    depends_on: 
+      nextcloud:
+        condition: service_healthy
+    network_mode: "service:wireguard"
+    environment:
+      - PUID=${uid}
+      - PGID=${gid}
+      - TZ=${timezone}
+      - TRANSMISSION_WEB_HOME=/flood-for-transmission/
+      - USER=${transmission_usr}
+      - PASS=${transmission_pwd}
+      - PEERPORT=${transmission_peerport}
+    volumes:
+      - ./config/transmission:/config
+      - ${data_path}/shared/${nextcloud_usr}/files/Torrents:/downloads
+      - ${data_path}/transmission-watch:/watch
+    restart: unless-stopped
