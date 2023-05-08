@@ -1,7 +1,10 @@
-U2FsdGVkX1/CPvFZhs1sYqiZ7gOZ55mX/wRf/zkFBaBUeFCDRrxuncZd6cs92aTr
-trYqPflVQbSp/Q6LnkVRK7ee0UbO6WDd9n2nsaru3WUU97VP8WAjhAHvmkIfHmLY
-kindQAuIzhIBKOuNuSR85ZJyoJDwPJY8/pL+BfmjX529FW8R0cUm/qtknVczFKON
-8xKodAervkCa56/RwBrA2Mw3D8sYOTf8R/vyn/xks05Noep4XLiyi+OYCJcGH5x9
-VXqJIJPiQUsiUhbRyhzOnoRFZgO8MVu4eoI9J6fwbyxk9UQSOGS5qrP/H0uHOBB6
-HKqF37Nj0Csba5ct8hR+uPo+QtbEYV1RHQzNOLONNgcqkTTcdDCdNhHVWYyrfkgP
-s1wRg2sWK7kG23JFzE0IMw==
+<?php
+$AUTOCONFIG = [
+    "dbtype"        => "sqlite",
+    "dbname"        => "nextcloud",
+    "dbtableprefix" => "",
+    "directory"     => "/data",
+    "install"       => true,
+    "adminlogin"    => "ADMIN_LOGIN"
+    "adminpass"     => "ADMIN_PASS",
+];

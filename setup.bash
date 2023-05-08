@@ -2,16 +2,16 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-
-# create config superfolder
-mkdir -p "${SCRIPT_PATH}/config"
-
 # create wg0.conf for Wireguard
 if [[ -z "${1+x}" ]] ; then
     echo "No file name for Wireguard config was provided."
     exit 1
 fi
+
+SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+# create config superfolder
+mkdir -p "${SCRIPT_PATH}/config"
 mkdir -p "${SCRIPT_PATH}/config/wireguard"
 WIREGUARD_DEFAULTS="${SCRIPT_PATH}/wireguard"
 WIREGUARD_CONFIG_PATH="${SCRIPT_PATH}/config/wireguard"
@@ -35,3 +35,5 @@ NEXTCLOUD_CONFIG_PATH="${SCRIPT_PATH}/config/nextcloud/www/nextcloud/config"
 mkdir -p "${NEXTCLOUD_CONFIG_PATH}"
 cp "${NEXTCLOUD_DEFAULTS}/config.php" "${NEXTCLOUD_CONFIG_PATH}/config.php"
 cp "${NEXTCLOUD_DEFAULTS}/autoconfig.php" "${NEXTCLOUD_CONFIG_PATH}/autoconfig.php"
+
+./additional_config.bash "${NEXTCLOUD_CONFIG_PATH}"

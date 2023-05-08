@@ -1,4 +1,4 @@
 #pattern  filter=crypt diff=crypt merge=crypt
 env.template  filter=crypt diff=crypt merge=crypt
 wireguard/*  filter=crypt diff=crypt merge=crypt
-nextcloud/autoconfig.php  filter=crypt diff=crypt merge=crypt
+additional_config.bash  filter=crypt diff=crypt merge=crypt

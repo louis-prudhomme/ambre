@@ -56,3 +56,22 @@ services:
       - ${data_path}/shared/${nextcloud_usr}/files/Torrents:/downloads
       - ${data_path}/transmission-watch:/watch
     restart: unless-stopped
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=${uid}
+      - PGID=${gid}
+      - TZ=${timezone}
+      - URL=${swag_url}
+      - SUBDOMAINS=wildcard
+      - VALIDATION=duckdns
+      - DUCKDNSTOKEN=${duck_token}
+    volumes:
+      - ./config/swag:/config
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
